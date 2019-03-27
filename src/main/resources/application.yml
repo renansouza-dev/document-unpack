@@ -1,0 +1,12 @@
+micronaut:
+    application:
+        name: invoice-unpack
+    server:
+        maxRequestSize: 100MB
+        multipart:
+            maxFileSize: 100MB
+consul:
+    client:
+        registration:
+            enabled: true
+        defaultZone: "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}"
