@@ -4,7 +4,7 @@
   <artifactId>invoice-unpack</artifactId>
   <version>0.1</version>
   <properties>
-    <micronaut.version>1.0.4</micronaut.version>
+    <micronaut.version>1.0.5</micronaut.version>
     <jdk.version>11</jdk.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <exec.mainClass>dev.renansouza.Application</exec.mainClass>

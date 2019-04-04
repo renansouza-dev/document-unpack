@@ -21,40 +21,34 @@ import java.io.IOException;
 public class DocumentController {
 
     private static final Logger log = LoggerFactory.getLogger(DocumentController.class);
-
-    DocumentService invoiceService;
-    String exception = "";
-
-    @Inject
-    DocumentController(DocumentService invoiceService) {
-        this.invoiceService = invoiceService;
-    }
+    private String exception = "";
 
     @Get("/")
     public HttpStatus index() {
         return HttpStatus.OK;
     }
 
+    //TODO Alter environment and flow to ENUM
     @Post(value = "/unpack", consumes = MediaType.MULTIPART_FORM_DATA)
     public Single<HttpResponse<String>> upload(StreamingFileUpload file, int environment, int flow) throws IOException {
         return Single.just(new Document(file.getFilename(), environment, flow))
-                .flatMap(DocumentValidation::validateDocumentExtension)
-                .doOnError(throwable -> {
-                    log.error("Validation exception: {}", throwable.getMessage());
-                    exception = throwable.getMessage();
-                })
-                .doOnSuccess(doc -> {
-                    log.info("File saved successfuly");
-                    File tempFile = File.createTempFile(file.getFilename(), "temp");
-                    file.transferTo(tempFile);
-                })
-                .map(success -> {
-                    if (exception != null || !exception.equals("")) {
-                        return HttpResponse.<String>status(HttpStatus.CREATED).body("Uploaded");
-                    } else {
-                        return HttpResponse.<String>status(HttpStatus.CONFLICT).body(exception);
-                    }
-                });
+            .flatMap(DocumentValidation::validateDocumentExtension)
+            .doOnError(throwable -> {
+                log.error("Validation exception: {}", throwable.getMessage());
+                exception = throwable.getMessage();
+            })
+            .doOnSuccess(doc -> {
+                log.info("File saved successfuly");
+                File tempFile = File.createTempFile(file.getFilename(), "temp");
+                file.transferTo(tempFile);
+            })
+            .map(success -> {
+                if (exception != null || !exception.equals("")) {
+                    return HttpResponse.<String>status(HttpStatus.CREATED).body("Uploaded");
+                } else {
+                    return HttpResponse.<String>status(HttpStatus.CONFLICT).body(exception);
+                }
+            });
     }
 
 }
