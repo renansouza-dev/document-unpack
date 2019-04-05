@@ -10,3 +10,13 @@ consul:
         registration:
             enabled: true
         defaultZone: "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}"
+
+servers:
+    -
+        name: "Server 1"
+        flow: "both"
+        environment: "test"
+    -
+        name: "Server 2"
+        flow: "both"
+        environment: "production"
