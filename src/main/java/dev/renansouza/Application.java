@@ -2,7 +2,7 @@ package dev.renansouza;
 
 import io.micronaut.runtime.Micronaut;
 
-public class Application {
+class Application {
 
     public static void main(String[] args) {
         Micronaut.run(Application.class);

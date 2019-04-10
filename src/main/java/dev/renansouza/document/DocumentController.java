@@ -4,7 +4,6 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.multipart.StreamingFileUpload;
 import io.reactivex.Single;
@@ -15,14 +14,14 @@ import java.io.File;
 import java.io.IOException;
 
 @Controller("/invoice")
-public class DocumentController {
+class DocumentController {
 
     private static final Logger log = LoggerFactory.getLogger(DocumentController.class);
     private String exception = "";
 
     //TODO Change environment and flow to ENUM
     @Post(value = "/unpack", consumes = MediaType.MULTIPART_FORM_DATA)
-    public Single<HttpResponse<String>> upload(StreamingFileUpload file, int environment, int flow) throws IOException {
+    public Single<HttpResponse<String>> upload(StreamingFileUpload file, int environment, int flow) {
         return Single.just(new Document(file.getFilename(), environment, flow))
             .flatMap(DocumentValidation::validateDocumentExtension)
             .doOnError(throwable -> {
@@ -30,7 +29,7 @@ public class DocumentController {
                 exception = throwable.getMessage();
             })
             .doOnSuccess(doc -> {
-                log.info("File saved successfuly");
+                log.info("File saved successfully");
                 File tempFile = File.createTempFile(file.getFilename(), "temp");
                 file.transferTo(tempFile);
             })

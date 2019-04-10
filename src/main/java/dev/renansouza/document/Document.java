@@ -2,10 +2,10 @@ package dev.renansouza.document;
 
 class Document {
 
-    private String filename;
-    private String extension;
-    private int environment;
-    private int flow;
+    private final String filename;
+    private final String extension;
+    private final int environment;
+    private final int flow;
 
     Document(String filename, int environment, int flow) {
         this.filename = filename;

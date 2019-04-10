@@ -9,10 +9,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class DocumentoControllerTest {
+public class DocumentControllerTest {
 
     @Test
-    public void testIndex() throws Exception {
+    public void testIndex() {
         try(EmbeddedServer server = ApplicationContext.run(EmbeddedServer.class)) {
             try(RxHttpClient client = server.getApplicationContext().createBean(RxHttpClient.class, server.getURL())) {
                 assertEquals(HttpStatus.OK, client.toBlocking().exchange("/invoice").status());
