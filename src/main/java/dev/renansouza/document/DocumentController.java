@@ -10,8 +10,8 @@ import io.reactivex.Single;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
+import static dev.renansouza.server.ServerEnvironment.getServerEnvironment;
+import static dev.renansouza.server.ServerFlow.getServerFlow;
 
 @Controller("/invoice")
 class DocumentController {
@@ -19,10 +19,9 @@ class DocumentController {
     private static final Logger log = LoggerFactory.getLogger(DocumentController.class);
     private String exception = "";
 
-    //TODO Change environment and flow to ENUM
     @Post(value = "/unpack", consumes = MediaType.MULTIPART_FORM_DATA)
     public Single<HttpResponse<String>> upload(StreamingFileUpload file, int environment, int flow) {
-        return Single.just(new Document(file.getFilename(), environment, flow))
+        return Single.just(new Document(file.getFilename(), getServerEnvironment(environment), getServerFlow(flow)))
             .flatMap(DocumentValidation::validateDocumentExtension)
             .doOnError(throwable -> {
                 log.error("Validation exception: {}", throwable.getMessage());
@@ -30,11 +29,10 @@ class DocumentController {
             })
             .doOnSuccess(doc -> {
                 log.info("File saved successfully");
-                File tempFile = File.createTempFile(file.getFilename(), "temp");
-                file.transferTo(tempFile);
+                //TODO implementar o salvar arquivo
             })
             .map(success -> {
-                if (exception != null || !exception.equals("")) {
+                if (exception != null && !exception.equals("")) {
                     return HttpResponse.<String>status(HttpStatus.CREATED).body("Uploaded");
                 } else {
                     return HttpResponse.<String>status(HttpStatus.CONFLICT).body(exception);

@@ -14,11 +14,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static dev.renansouza.Constants.ROOT;
+
 @Controller("/servers")
 class ServerService {
 
     private static final Logger log = LoggerFactory.getLogger(ServerService.class);
-    private static final String ROOT = "input";
 
     private final List<Server> serverList;
 
@@ -29,18 +30,18 @@ class ServerService {
     @EventListener
     void onStartup(ServerStartupEvent event) throws IOException {
         for(Server server: serverList) {
-            if (server.getFlow().equals("both") || server.getFlow().equals("emission")) {
-                final Path emission = Paths.get(ROOT, server.getAlias(), "emission");
+            if (server.getFlow().equals(ServerFlow.BOTH) || server.getFlow().equals(ServerFlow.EMISSION)) {
+                final Path emission = Paths.get(ROOT, server.getEnvironment().name().toLowerCase(), ServerFlow.EMISSION.name().toLowerCase());
                 if (!Files.exists(emission)) {
-                    log.info("Creating work dir {}", emission);
+                    log.debug("Creating work dir {}", emission);
                     Files.createDirectories(emission);
                 }
             }
 
-            if (server.getFlow().equals("both") || server.getFlow().equals("receipt")) {
-                final Path receipt = Paths.get(ROOT, server.getAlias(), "receipt");
+            if (server.getFlow().equals(ServerFlow.BOTH) || server.getFlow().equals(ServerFlow.RECEIPT)) {
+                final Path receipt = Paths.get(ROOT, server.getEnvironment().name().toLowerCase(), ServerFlow.RECEIPT.name().toLowerCase());
                 if (!Files.exists(receipt)) {
-                    log.info("Creating work dir {}", receipt);
+                    log.debug("Creating work dir {}", receipt);
                     Files.createDirectories(receipt);
                 }
             }
@@ -51,7 +52,7 @@ class ServerService {
         final Map<String, Map<String, Long>> queue = new HashMap<>();
         for(Server server: serverList) {
             final Map<String, Long> folderList = new HashMap<>();
-            Files.list(Paths.get(ROOT, server.getAlias())).sorted().forEach(
+            Files.list(Paths.get(ROOT, server.getEnvironment().name().toLowerCase())).sorted().forEach(
             folder -> {
                 try {
                     final String folderName = folder.getFileName().toString();
@@ -62,7 +63,7 @@ class ServerService {
                     e.printStackTrace();
                 }
             });
-            queue.put(server.getAlias(), folderList);
+            queue.put(server.getEnvironment().name().toLowerCase(), folderList);
         }
         return queue;
     }

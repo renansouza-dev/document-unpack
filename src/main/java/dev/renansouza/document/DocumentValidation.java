@@ -15,7 +15,7 @@ class DocumentValidation {
     }
 
     private static boolean filenameValidation(Document doc) {
-        return doc.getFilename() != null || !doc.getFilename().equals("");
+        return doc.getFilename() != null && !doc.getFilename().equals("");
     }
 
     private static boolean extensionValidation(Document doc) {
