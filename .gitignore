@@ -26,3 +26,4 @@ hs_err_pid*
 .idea/*
 invoice-unpack.iml
 target/
+dependency-reduced-pom.xml
