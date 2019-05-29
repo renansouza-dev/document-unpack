@@ -5,8 +5,32 @@ micronaut:
         maxRequestSize: 100MB
         multipart:
             maxFileSize: 100MB
+    security:
+        enabled: true
+        endpoints:
+            login:
+                enabled: true
+            oauth:
+                enabled: true
+        token:
+            jwt:
+                enabled: true
+                signatures:
+                    secret:
+                        generator:
+                            secret: pleaseChangeThisSecretForANewOne
+                            jws-algorithm: HS256
+
 consul:
     client:
         registration:
             enabled: true
         defaultZone: "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}"
+
+credentials:
+    users:
+        dev: dev123
+        user: user123
+    roles:
+        dev: ADMIN
+        user: VIEW
