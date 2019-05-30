@@ -21,4 +21,5 @@ class DocumentValidation {
     private static boolean extensionValidation(Document doc) {
         return doc.getExtension().equals(".zip") || doc.getExtension().equals(".7z") || doc.getExtension().equals(".xml");
     }
+
 }
