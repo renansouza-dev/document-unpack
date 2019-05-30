@@ -1,5 +1,0 @@
-profile: service
-defaultPackage: dev.renansouza
----
-testFramework: junit
-sourceLanguage: java
