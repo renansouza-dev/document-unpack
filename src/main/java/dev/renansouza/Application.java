@@ -9,9 +9,9 @@ import io.swagger.v3.oas.annotations.info.License;
 
 @OpenAPIDefinition(
     info = @Info(
-            title = "invoice-unpack",
+            title = "document-unpack",
             version = "0.1",
-            description = "Invoice Unpack API",
+            description = "Document Unpack API",
             license = @License(name = "MIT", url = "https://github.com/renansouza-dev/document-unpack/blob/master/LICENSE"),
             contact = @Contact(url = "https://renansouza-dev.github.io", name = "Renan Souza", email = "renansouza-dev@github.io")
     )
