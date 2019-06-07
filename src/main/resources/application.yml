@@ -8,8 +8,6 @@ application:
             urls:
                 - name: micronaut-realworld-example-app
                   url: /api-docs/swagger/document-unpack-0.1.yml
-                    #- name: spec2
-                    #  url: url2
 
 micronaut:
     application:
@@ -18,21 +16,21 @@ micronaut:
         maxRequestSize: 100MB
         multipart:
             maxFileSize: 100MB
-    security:
-        enabled: true
-        endpoints:
-            login:
-                enabled: true
-            oauth:
-                enabled: true
-        token:
-            jwt:
-                enabled: true
-                signatures:
-                    secret:
-                        generator:
-                            secret: pleaseChangeThisSecretForANewOne
-                            jws-algorithm: HS256
+#    security:
+#        enabled: true
+#        endpoints:
+#            login:
+#                enabled: true
+#            oauth:
+#                enabled: true
+#        token:
+#            jwt:
+#                enabled: true
+#                signatures:
+#                    secret:
+#                        generator:
+#                            secret: pleaseChangeThisSecretForANewOne
+#                            jws-algorithm: HS256
     router:
         static-resources:
             swagger:
