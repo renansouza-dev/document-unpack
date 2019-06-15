@@ -6,12 +6,17 @@ application:
             layout: StandaloneLayout
             deepLinking: true
             urls:
-                - name: micronaut-realworld-example-app
+                - name: document-unpack
                   url: /api-docs/swagger/document-unpack-0.1.yml
+        swagger-ui:
+            path: /api-docs/swagger-ui
+            urls:
+                - name: document-unpack
+                  url: /api-docs/swagger-ui/**
 
 micronaut:
     application:
-        name: invoice-unpack
+        name: document-unpack
     server:
         maxRequestSize: 100MB
         multipart:
@@ -35,7 +40,10 @@ micronaut:
         static-resources:
             swagger:
                 paths: classpath:META-INF/swagger
-                mapping: /swagger/**
+                mapping: ${application.api.swagger.path}/**
+            swagger-ui:
+                paths: classpath:META-INF/swagger-ui
+                mapping: ${application.api.swagger-ui.path}/**
 
 consul:
     client:

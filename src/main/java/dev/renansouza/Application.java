@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
             contact = @Contact(url = "https://renansouza-dev.github.io", name = "Renan Souza", email = "renansouza-dev@github.io")
     ),
     security = {
-            @SecurityRequirement(name = "Base Auth"),
+            @SecurityRequirement(name = "BasicAuth"),
             @SecurityRequirement(name = "JWT")
     }
 )

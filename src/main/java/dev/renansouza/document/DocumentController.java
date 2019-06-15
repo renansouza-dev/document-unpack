@@ -33,6 +33,7 @@ public class DocumentController {
     private static final Logger log = LoggerFactory.getLogger(DocumentController.class);
     private String exception = "";
 
+    // TODO remove this after complete BasicAuth and Baerer
     @Hidden
     @Get("/")
     public MutableHttpResponse<String> index() {
@@ -40,6 +41,7 @@ public class DocumentController {
     }
 
     //TODO Alter environment and flow to ENUM
+    //TODO fix upload parameters
     @Operation(summary = "Unpack Files",
             description = "Receives a packed zip or gzip file with xml files inside or receives xml files",
             responses = {
