@@ -21,21 +21,27 @@ micronaut:
         maxRequestSize: 100MB
         multipart:
             maxFileSize: 100MB
-#    security:
-#        enabled: true
-#        endpoints:
-#            login:
-#                enabled: true
-#            oauth:
-#                enabled: true
-#        token:
-#            jwt:
-#                enabled: true
-#                signatures:
-#                    secret:
-#                        generator:
-#                            secret: pleaseChangeThisSecretForANewOne
-#                            jws-algorithm: HS256
+    security:
+        enabled: true
+        intercept-url-map:
+            -
+                pattern: /api-docs/swagger/document-unpack-0.1.yml
+                http-method: GET
+                access:
+                    - isAnonymous()
+        endpoints:
+            login:
+                enabled: true
+            oauth:
+                enabled: true
+        token:
+            jwt:
+                enabled: true
+                signatures:
+                    secret:
+                        generator:
+                            secret: pleaseChangeThisSecretForANewOne
+                            jws-algorithm: HS256
     router:
         static-resources:
             swagger:

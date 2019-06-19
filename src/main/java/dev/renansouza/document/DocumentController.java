@@ -42,29 +42,29 @@ public class DocumentController {
 
     //TODO Alter environment and flow to ENUM
     //TODO fix upload parameters
-    @Operation(summary = "Unpack Files",
-            description = "Receives a packed zip or gzip file with xml files inside or receives xml files",
-            responses = {
-                @ApiResponse(responseCode = "201", description = "Created"),
-                @ApiResponse(responseCode = "401", description = "Unauthorized"),
-                @ApiResponse(responseCode = "503", description = "Service Unaviable")
-            }
-    )
-    @ApiResponse(
-            content = @Content(mediaType = "text/plain", schema = @Schema(type="string")),
-            description = "The result of the operation."
-    )
-    @Tag(name = "unpack")
-    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
+//    @Operation(summary = "Unpack Files",
+//            description = "Receives a packed zip or gzip file with xml files inside or receives xml files",
+//            responses = {
+//                @ApiResponse(responseCode = "201", description = "Created"),
+//                @ApiResponse(responseCode = "401", description = "Unauthorized"),
+//                @ApiResponse(responseCode = "503", description = "Service Unaviable")
+//            }
+//    )
+//    @ApiResponse(
+//            content = @Content(mediaType = "text/plain", schema = @Schema(type="string")),
+//            description = "The result of the operation."
+//    )
+//    @Tag(name = "unpack")
+//    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     @Post(value = "/unpack", consumes = MediaType.MULTIPART_FORM_DATA)
     public Single<HttpResponse<String>> upload(
-            @RequestBody(
-                    description = "Created document object",
-                    required = true,
-                    content = @Content(schema = @Schema(implementation = StreamingFileUpload.class, format = "binary"))) StreamingFileUpload file,
-                    //FIXME fix upload parameters
-                    @Parameter(description = "Within which server the file unpacked must be sent.", required = true) int flow,
-                    @Parameter(description = "Within which environment the file unpacked must be sent.", required = true) int environment
+//            @RequestBody(
+//                    description = "Created document object",
+//                    required = true,
+                    /*content = @Content(schema = @Schema(implementation = StreamingFileUpload.class, format = "binary")))*/ StreamingFileUpload file,
+//                    //FIXME fix upload parameters
+                    /*@Parameter(description = "Within which server the file unpacked must be sent.", required = true)*/ int flow,
+                    /*@Parameter(description = "Within which environment the file unpacked must be sent.", required = true)*/ int environment
             ) throws IOException {
         return Single.just(new Document(file.getFilename(), environment, flow))
             .flatMap(DocumentValidation::validateDocumentExtension)
