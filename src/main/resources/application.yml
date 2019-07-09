@@ -42,6 +42,9 @@ micronaut:
                         generator:
                             secret: pleaseChangeThisSecretForANewOne
                             jws-algorithm: HS256
+    ssl:
+        enabled: true
+        buildSelfSigned: true
     router:
         static-resources:
             swagger:

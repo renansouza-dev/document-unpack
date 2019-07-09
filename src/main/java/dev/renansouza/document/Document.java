@@ -4,14 +4,14 @@ class Document {
 
     private String filename;
     private String extension;
-    private int environment;
-    private int flow;
+    private DocumentEnvironment environment;
+    private DocumentFlow flow;
 
     Document(String filename, int environment, int flow) {
         this.filename = filename;
         this.extension = filename.substring(filename.lastIndexOf("."));
-        this.environment = environment;
-        this.flow = flow;
+        this.environment = DocumentEnvironment.valueOf(environment);
+        this.flow = DocumentFlow.valueOf(flow);
     }
 
     String getFilename() {
@@ -22,11 +22,11 @@ class Document {
         return extension;
     }
 
-    int getEnvironment() {
+    DocumentEnvironment getEnvironment() {
         return environment;
     }
 
-    int getFlow() {
+    DocumentFlow getFlow() {
         return flow;
     }
 
